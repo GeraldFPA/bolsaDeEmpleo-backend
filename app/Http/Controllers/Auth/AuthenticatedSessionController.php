@@ -17,9 +17,8 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): JsonResponse
     {
         $request->authenticate();
+
         $user = $request->user();
-
-
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -37,11 +36,11 @@ class AuthenticatedSessionController extends Controller
         if (!$request->user()) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
-    
+
         // Elimina TODOS los tokens del usuario (no solo el actual)
         $request->user()->tokens()->delete();
-    
-    
+
+
         return response()->json(null, 204);
     }
 }
