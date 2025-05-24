@@ -26,6 +26,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed'],
             'phone_number' => ['required', 'string', 'max:15'],
+            'role' => ['required','string', 'in:employee,company,user'], 
         ]);
 
         $user = User::create([
@@ -33,6 +34,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->string('password')),
             'phone_number' => $request->string('phone_number'),
+            'role' => $request->string('role'),
         ]);
 
         event(new Registered($user));
@@ -44,6 +46,8 @@ class RegisteredUserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'role' => $user->role,
+            'id' => $user->id,
             'user' => $user,
         ], 201);
     }
