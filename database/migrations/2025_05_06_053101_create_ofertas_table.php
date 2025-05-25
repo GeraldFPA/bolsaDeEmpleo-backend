@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('tipo'); // Puesto de trabajo
             $table->string('categoria');
+            $table->string('empresa'); // Nombre de la empresa
             $table->string('horario');
             $table->decimal('sueldo', 10, 2);
             $table->string('contrato');

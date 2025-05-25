@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Oferta extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'tipo', 'categoria', 'horario', 'sueldo', 'contrato', 'descripcion'
+        'user_id', 'tipo', 'categoria','empresa', 'horario', 'sueldo', 'contrato', 'descripcion'
     ];
 
     public function user()
