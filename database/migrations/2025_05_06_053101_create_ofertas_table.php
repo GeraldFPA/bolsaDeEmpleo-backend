@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ofertas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('tipo'); // Puesto de trabajo
+            $table->string('puesto'); // Puesto de trabajo
             $table->string('categoria');
             $table->string('empresa'); // Nombre de la empresa
             $table->string('horario');

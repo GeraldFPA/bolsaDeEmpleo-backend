@@ -10,7 +10,7 @@ class Oferta extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'tipo', 'categoria','empresa', 'horario', 'sueldo', 'contrato', 'descripcion'
+        'user_id', 'puesto', 'categoria','empresa', 'horario', 'sueldo', 'contrato', 'descripcion'
     ];
 
     public function user()
