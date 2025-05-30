@@ -11,7 +11,7 @@ class OfertaController extends Controller
 {
     public function index()
     {
-        $ofertas = Oferta::with('user:id,name')->get();
+        $ofertas = Oferta::with('user:id,name')->where('estado','activo')->get();
         return response()->json($ofertas);
     }
     public function store(Request $request)

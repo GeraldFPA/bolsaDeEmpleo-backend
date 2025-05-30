@@ -14,3 +14,4 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 Route::middleware('auth:sanctum')->post('/oferta', [OfertaController::class, 'store']);
+Route::middleware('auth:sanctum')->get('/ofertas', [OfertaController::class, 'index']);

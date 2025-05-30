@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('horario');
             $table->decimal('sueldo', 10, 2);
             $table->string('contrato');
+            $table->string('estado')->default('activo'); // Estado de la oferta (activo, inactivo, etc.)
             $table->text('descripcion');
             $table->timestamps();
         });

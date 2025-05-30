@@ -10,7 +10,7 @@ class Postulacion extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'oferta_id', 'mensaje'
+        'user_id', 'oferta_id', 'estado','mensaje'
     ];
 
     public function user()

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('oferta_id')->constrained()->onDelete('cascade');
+            $table->string('estado')->default('pendiente'); // Estado de la postulacion (pendiente, aceptada, rechazada)
             $table->text('mensaje')->nullable();
             $table->timestamps();
         });
