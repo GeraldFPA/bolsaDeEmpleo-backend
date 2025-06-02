@@ -10,17 +10,25 @@ class Oferta extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'puesto', 'categoria','empresa', 'horario', 'sueldo', 'contrato', 'estado','descripcion'
+        'user_id',
+        'puesto',
+        'categoria',
+        'empresa',
+        'horario',
+        'sueldo',
+        'contrato',
+        'estado',
+        'descripcion'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function postulaciones()
     {
-        return $this->hasMany(Postulacion::class);
+        return $this->hasMany(Postulacion::class, 'oferta_id');
     }
 
 }
