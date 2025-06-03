@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/ofertas', [OfertaController::class, 'in
 Route::middleware('auth:sanctum')->post('/postular', [PostulacionController::class, 'store']);
 Route::middleware('auth:sanctum')->get('/postulaciones/recibidas', [PostulacionController::class, 'recibidas']);
 Route::get('/cv/{id}', [PostulacionController::class, 'descargarCV']);
-
+Route::middleware('auth:sanctum')->get('/postulacion/existe/{oferta}', [PostulacionController::class, 'verificarPostulacion']);

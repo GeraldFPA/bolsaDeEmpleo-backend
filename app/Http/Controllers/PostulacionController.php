@@ -65,6 +65,15 @@ class PostulacionController extends Controller
 
         return response()->download($path, $downloadName);
     }
+    public function verificarPostulacion(Request $request, $ofertaId)
+    {
+        $userId = $request->user()->id;
 
-    //
+        $existe = Postulacion::where('user_id', $userId)
+            ->where('oferta_id', $ofertaId)
+            ->exists();
+
+        return response()->json(['ya_postulado' => $existe]);
+    }
+    
 }
