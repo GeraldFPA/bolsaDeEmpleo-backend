@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('telefono');
             $table->text('comentario')->nullable();
             $table->string('cv_path');
+            $table->string('cv_original_name')->nullable();
             $table->timestamps();
         });
     }

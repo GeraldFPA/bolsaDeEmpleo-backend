@@ -25,6 +25,7 @@ class AuthTest extends TestCase
             'password_confirmation' => 'password123',
             'nombre' => 'Juan Pérez',
             'phone_number' => '88881234',
+            'role'=> 'company', // o 'employee'  según tu lógica
         ]);
 
         $response->assertStatus(201);

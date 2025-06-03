@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Postulacion;
 class PostulacionController extends Controller
 {
-    public function index()
-    {
 
-    }
     public function store(Request $request)
     {
         $request->validate([
@@ -20,8 +17,14 @@ class PostulacionController extends Controller
             'comentario' => 'nullable|string',
             'cv' => 'required|file|mimes:pdf|max:2048',
         ]);
+        $cvFile = $request->file('cv')
+        ;
+        // Se obtiene el nombre original y genera uno único para almacenamiento
+        $originalFilename = $cvFile->getClientOriginalName();
+        $storedFilename = time() . '_' . $originalFilename;
 
-        $cvPath = $request->file('cv')->store('cv_postulaciones', 'public');
+        // Guarda el archivo con el nuevo nombre en storage/app/public/cv_postulaciones
+        $cvPath = $cvFile->storeAs('cv_postulaciones', $storedFilename, 'public');
 
         $postulacion = Postulacion::create([
             'user_id' => $request->user()->id,
@@ -31,6 +34,7 @@ class PostulacionController extends Controller
             'telefono' => $request->telefono,
             'comentario' => $request->comentario,
             'cv_path' => $cvPath,
+            'cv_original_name' => $originalFilename,
         ]);
 
         return response()->json([
@@ -52,13 +56,14 @@ class PostulacionController extends Controller
     public function descargarCV($id)
     {
         $postulacion = Postulacion::findOrFail($id);
-        $path = storage_path('app/' . $postulacion->cv);
+        $path = storage_path('app/public/' . $postulacion->cv_path);
 
         if (!file_exists($path)) {
             abort(404, 'Archivo no encontrado');
         }
+        $downloadName = $postulacion->cv_original_name ?? 'curriculum.pdf';
 
-        return response()->download($path);
+        return response()->download($path, $downloadName);
     }
 
     //

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Postulacion extends Model
 {
     use HasFactory;
+ 
 
     protected $fillable = [
         'user_id',
@@ -17,7 +18,8 @@ class Postulacion extends Model
         'email',
         'telefono',
         'comentario',
-        'cv_path'
+        'cv_path',
+        'cv_original_name'
     ];
 
     public function user()
