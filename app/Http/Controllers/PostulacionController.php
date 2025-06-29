@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Oferta;
 use Illuminate\Http\Request;
 use App\Models\Postulacion;
 class PostulacionController extends Controller
@@ -75,5 +76,40 @@ class PostulacionController extends Controller
 
         return response()->json(['ya_postulado' => $existe]);
     }
-    
+    public function showByUserId($userId)
+    {
+        $postulaciones = Postulacion::with('oferta:id,puesto,categoria,empresa')->where('user_id', $userId)->get();
+
+        if ($postulaciones->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron ofertas para este usuario'], 404);
+        }
+
+        return response()->json($postulaciones);
+    }
+    public function showByOfertaId($ofertaId)
+    {
+        $postulaciones = Postulacion::with([
+            'user:id,name,email',
+            'oferta:id,puesto'
+        ])
+            ->where('oferta_id', $ofertaId)
+            ->get();
+        if ($postulaciones->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron postulaciones para esta oferta'], 404);
+        }
+
+        return response()->json($postulaciones);
+    }
+    public function acceptPostulacion(Request $request, $idPostulacion, $idOferta)
+    {
+        // Por ejemplo, actualizar el estado de la postulación o notificar al postulante
+        $postulacion = Postulacion::findOrFail($idPostulacion);
+        $postulacion->estado = 'aceptada'; // Asumiendo que tienes un campo 'estado' en tu modelo
+        $postulacion->save();
+        $oferta = Oferta::findOrFail($idOferta);
+        $oferta->estado = 'inactiva'; // Cambiar el estado de la oferta si es necesario
+        $oferta->save();
+        return response()->json(['message' => 'Postulación aceptada correctamente.', 'data' => $postulacion]);
+    }
+
 }

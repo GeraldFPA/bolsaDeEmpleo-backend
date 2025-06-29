@@ -11,7 +11,7 @@ class OfertaController extends Controller
 {
     public function index()
     {
-        $ofertas = Oferta::with('user:id,name')->where('estado','activo')->get();
+        $ofertas = Oferta::with('user:id,name')->where('estado', 'activo')->get();
         return response()->json($ofertas);
     }
     public function store(Request $request)
@@ -48,6 +48,15 @@ class OfertaController extends Controller
 
         return response()->json($oferta, 201);
     }
-
+    public function showByUserId($userId)
+    {
+        $ofertas = Oferta::with('user:id,name')->where('user_id', $userId)->get();
+        
+        if ($ofertas->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron ofertas para este usuario'], 404);
+        }
+        
+        return response()->json($ofertas);
+    }
 
 }

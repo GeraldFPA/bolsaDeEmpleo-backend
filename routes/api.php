@@ -20,3 +20,6 @@ Route::middleware('auth:sanctum')->post('/postular', [PostulacionController::cla
 Route::middleware('auth:sanctum')->get('/postulaciones/recibidas', [PostulacionController::class, 'recibidas']);
 Route::get('/cv/{id}', [PostulacionController::class, 'descargarCV']);
 Route::middleware('auth:sanctum')->get('/postulacion/existe/{oferta}', [PostulacionController::class, 'verificarPostulacion']);
+Route::middleware('auth:sanctum')->get('/ofertas/{id}', [OfertaController::class, 'showByUserId']); 
+Route::middleware('auth:sanctum')->get('/postulaciones/hechas/{id}', [PostulacionController::class, 'showByUserId']);
+Route::middleware('auth:sanctum')->get('/postulaciones/recibidas/{id}', [PostulacionController::class, 'showByOfertaId']);
