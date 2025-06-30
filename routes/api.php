@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\PostulacionController;
+use App\Http\Controllers\NotificacionesController ;
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -23,3 +24,7 @@ Route::middleware('auth:sanctum')->get('/postulacion/existe/{oferta}', [Postulac
 Route::middleware('auth:sanctum')->get('/ofertas/{id}', [OfertaController::class, 'showByUserId']); 
 Route::middleware('auth:sanctum')->get('/postulaciones/hechas/{id}', [PostulacionController::class, 'showByUserId']);
 Route::middleware('auth:sanctum')->get('/postulaciones/recibidas/{id}', [PostulacionController::class, 'showByOfertaId']);
+Route::middleware('auth:sanctum')->get('/notificaciones/noleidas', [NotificacionesController::class, 'getNotificacionesNoLeidas']);
+Route::middleware('auth:sanctum')->post('/postulaciones/aceptar/{idPostulacion}/{idOferta}', [PostulacionController::class, 'acceptPostulacion']);
+Route::middleware('auth:sanctum')->post('/notificaciones/marcar-leidas', [NotificacionesController::class, 'marcarComoLeidas']);
+Route::middleware('auth:sanctum')->get('/notificaciones/misnotificaciones', [NotificacionesController::class, 'getNotificaciones']);

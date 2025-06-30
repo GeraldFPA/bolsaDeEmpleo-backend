@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Oferta;
 use Illuminate\Http\Request;
 use App\Models\Postulacion;
+use App\Models\Notificacion;
 class PostulacionController extends Controller
 {
 
@@ -102,13 +103,21 @@ class PostulacionController extends Controller
     }
     public function acceptPostulacion(Request $request, $idPostulacion, $idOferta)
     {
-        // Por ejemplo, actualizar el estado de la postulación o notificar al postulante
+
         $postulacion = Postulacion::findOrFail($idPostulacion);
-        $postulacion->estado = 'aceptada'; // Asumiendo que tienes un campo 'estado' en tu modelo
+        $postulacion->estado = 'aceptada';
         $postulacion->save();
+
         $oferta = Oferta::findOrFail($idOferta);
-        $oferta->estado = 'inactiva'; // Cambiar el estado de la oferta si es necesario
+        $oferta->estado = 'inactiva';
         $oferta->save();
+
+        Notificacion::create([
+            'user_id' => $postulacion->user_id,
+            'tipo' => 'Ha sido aceptado',
+            'mensaje' => 'Tu postulación a "' . $oferta->puesto . '" fue aceptada.',
+            'leida' => false
+        ]);
         return response()->json(['message' => 'Postulación aceptada correctamente.', 'data' => $postulacion]);
     }
 
